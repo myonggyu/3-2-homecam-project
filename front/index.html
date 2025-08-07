@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>[팀명] 악성 URL 탐지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.10/html5-qrcode.min.js"></script>
+</head>
+<body>
+<div id="main-page">
+    <div class="container">
+        <!-- 검사 이력 -->
+        <div class="left-panel">
+            <div class="card">
+                <div style="font-weight:700; font-size:1.07em; color:#2767c5; margin-bottom:10px;">검사 이력</div>
+                <div id="history-list"></div>
+                <button class="rbtn" style="margin-top:10px;" onclick="clearHistory()">이력 전체 삭제</button>
+                <div class="admin-link"><a href="report.html" target="_blank">신고 리스트(관리자)</a></div>
+            </div>
+        </div>
+        <!-- 입력 및 탐지 -->
+        <div class="card" style="flex:2;min-width:400px;">
+            <h1>[팀명] 악성 URL/QR 탐지</h1>
+            <div class="desc">의심되는 URL / QR 코드, <b>클릭 전 실시간 탐지</b>로 안전하게!<br>즉시 진단 서비스입니다.</div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('url')">URL 입력</button>
+                <button class="tab-btn" onclick="showTab('qr')">QR 코드 스캔</button>
+            </div>
+            <div class="tab-content active" id="tab-url">
+                <div class="input-group">
+                    <label for="direct-url">분석할 주소(URL)</label>
+                    <input id="direct-url" type="text" placeholder="https://..." autocomplete="off"/>
+                </div>
+            </div>
+            <div class="tab-content" id="tab-qr">
+                <div class="qr-mode-btns">
+                    <button class="rbtn" onclick="chooseQRMode('camera')">QR 카메라 스캔</button>
+                    <button class="rbtn" onclick="chooseQRMode('file')">QR 이미지 선택</button>
+                </div>
+                <input type="file" id="qr-file" style="display:none" accept="image/*" onchange="onQRFileChange(event)">
+                <div id="qr-reader" style="width:100%;max-width:350px;margin-bottom:10px;"></div>
+            </div>
+            <button class="btn" id="scan-btn" onclick="runDetection()">
+                <i data-lucide="shield-check"></i> 실시간 보안 탐지
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="result-page" style="display:none;">
+    <div class="dashboard-wrap">
+        <div class="dashboard" id="result-dashboard"></div>
+    </div>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
